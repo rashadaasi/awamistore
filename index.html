@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Awami General Store – Everything Your Home Needs</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --royal: #0057D9;
+  --sky: #4EA5FF;
+  --white: #FFFFFF;
+  --bg: #F0F6FF;
+  --dark: #0A1628;
+  --dark2: #112240;
+  --text: #1E293B;
+  --muted: #64748B;
+  --card-radius: 18px;
+  --shadow: 0 8px 32px rgba(0,87,217,0.10);
+  --shadow-hover: 0 20px 60px rgba(0,87,217,0.20);
+  --gradient: linear-gradient(135deg, #0057D9 0%, #4EA5FF 100%);
+  --gradient-soft: linear-gradient(135deg, #EBF4FF 0%, #F0F6FF 100%);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* ─── SCROLL PROGRESS ─── */
+#progress-bar {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: var(--gradient); z-index: 9999; width: 0%;
+  transition: width 0.1s;
+}
+
+/* ─── NAVBAR ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 0 5%; display: flex; align-items: center;
+  justify-content: space-between; height: 72px;
+  transition: all 0.35s ease;
+  background: transparent;
+}
+nav.scrolled {
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 2px 30px rgba(0,87,217,0.10);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none;
+}
+.nav-logo .logo-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--gradient);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; color: #fff; font-weight: 800;
+  box-shadow: 0 4px 15px rgba(0,87,217,0.35);
+}
+.nav-logo span {
+  font-size: 1.15rem; font-weight: 700; color: var(--royal);
+  line-height: 1.15;
+}
+.nav-logo small { display: block; font-size: 0.65rem; font-weight: 400; color: var(--muted); }
+.nav-links {
+  display: flex; align-items: center; gap: 2px; list-style: none;
+}
+.nav-links a {
+  text-decoration: none; font-size: 0.82rem; font-weight: 500;
+  color: var(--text); padding: 6px 12px; border-radius: 8px;
+  transition: all 0.2s;
+}
+.nav-links a:hover { background: rgba(0,87,217,0.08); color: var(--royal); }
+nav.scrolled .nav-links a { color: var(--text); }
+nav:not(.scrolled) .nav-links a { color: #fff; }
+nav:not(.scrolled) .nav-links a:hover { background: rgba(255,255,255,0.15); color: #fff; }
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+.nav-search {
+  display: flex; align-items: center;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 25px; padding: 6px 14px; gap: 7px;
+  transition: all 0.3s;
+}
+nav.scrolled .nav-search {
+  background: rgba(0,87,217,0.06); border-color: rgba(0,87,217,0.15);
+}
+.nav-search input {
+  border: none; background: transparent; outline: none;
+  font-size: 0.8rem; font-family: 'Poppins', sans-serif;
+  width: 140px; color: inherit;
+}
+nav:not(.scrolled) .nav-search input { color: #fff; }
+nav:not(.scrolled) .nav-search input::placeholder { color: rgba(255,255,255,0.7); }
+.nav-search i { color: var(--sky); font-size: 0.8rem; }
+.btn-nav {
+  padding: 8px 18px; border-radius: 22px; font-size: 0.8rem;
+  font-weight: 600; cursor: pointer; border: none; font-family: 'Poppins', sans-serif;
+  transition: all 0.25s;
+}
+.btn-nav.outline {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.5); color: #fff;
+}
+nav.scrolled .btn-nav.outline {
+  background: transparent; border-color: var(--royal); color: var(--royal);
+}
+.btn-nav.fill {
+  background: var(--gradient); color: #fff;
+  box-shadow: 0 4px 15px rgba(0,87,217,0.35);
+}
+.btn-nav:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,87,217,0.4); }
+.cart-btn {
+  position: relative; background: none; border: none; cursor: pointer;
+  font-size: 1.25rem; color: var(--sky); transition: all 0.2s;
+}
+nav:not(.scrolled) .cart-btn { color: #fff; }
+.cart-btn:hover { transform: scale(1.15); }
+.cart-count {
+  position: absolute; top: -6px; right: -6px; width: 18px; height: 18px;
+  background: #FF3B3B; border-radius: 50%; font-size: 0.6rem; font-weight: 700;
+  color: #fff; display: flex; align-items: center; justify-content: center;
+}
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+.hamburger span { width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s; display: block; }
+nav.scrolled .hamburger span { background: var(--royal); }
+
+/* ─── DARK MODE TOGGLE ─── */
+.dark-toggle {
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 22px; padding: 6px 12px; cursor: pointer; font-size: 0.85rem;
+  transition: all 0.3s; color: #fff;
+}
+nav.scrolled .dark-toggle { background: rgba(0,87,217,0.08); border-color: rgba(0,87,217,0.2); color: var(--royal); }
+
+body.dark-mode { --bg: #0A1628; --text: #E2E8F0; --muted: #94A3B8; }
+body.dark-mode nav.scrolled { background: rgba(10,22,40,0.97); }
+body.dark-mode .product-card, body.dark-mode .cat-card, body.dark-mode .testimonial-card { background: #112240; }
+body.dark-mode .section-bg { background: #0d1e36; }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh; position: relative; overflow: hidden;
+  background: linear-gradient(135deg, #0057D9 0%, #003399 40%, #1a6bd4 70%, #4EA5FF 100%);
+  display: flex; align-items: center; padding: 100px 5% 60px;
+}
+.hero-particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.particle {
+  position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,0.08); animation: floatUp 8s infinite;
+}
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-90vh) rotate(360deg); opacity: 0; }
+}
+.hero-shapes { position: absolute; inset: 0; pointer-events: none; }
+.shape {
+  position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  animation: pulse 6s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+.hero-content { position: relative; z-index: 2; max-width: 600px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+  backdrop-filter: blur(10px); border-radius: 30px; padding: 8px 18px;
+  font-size: 0.8rem; color: rgba(255,255,255,0.9); font-weight: 500;
+  margin-bottom: 24px; animation: fadeDown 0.8s ease;
+}
+.hero-badge i { color: #FFD700; }
+.hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 900;
+  color: #fff; line-height: 1.1; margin-bottom: 20px;
+  animation: fadeDown 0.9s ease;
+}
+.hero h1 span { color: #FFD700; }
+.hero p {
+  font-size: 1.1rem; color: rgba(255,255,255,0.85); line-height: 1.7;
+  margin-bottom: 36px; animation: fadeDown 1s ease;
+}
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; animation: fadeDown 1.1s ease; }
+.btn-primary {
+  padding: 14px 32px; background: #fff; color: var(--royal);
+  border: none; border-radius: 50px; font-size: 0.95rem; font-weight: 700;
+  cursor: pointer; font-family: 'Poppins', sans-serif;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15); transition: all 0.3s;
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,0.2); background: #f0f6ff; }
+.btn-outline-white {
+  padding: 14px 32px; background: rgba(255,255,255,0.15);
+  border: 2px solid rgba(255,255,255,0.5); border-radius: 50px;
+  color: #fff; font-size: 0.95rem; font-weight: 600; cursor: pointer;
+  font-family: 'Poppins', sans-serif; transition: all 0.3s;
+  backdrop-filter: blur(10px);
+}
+.btn-outline-white:hover { background: rgba(255,255,255,0.25); transform: translateY(-3px); }
+.hero-floating-icons {
+  position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 16px; z-index: 2;
+}
+.float-icon {
+  width: 65px; height: 65px; background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 20px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.7rem; animation: floatIcon 3s ease-in-out infinite;
+  cursor: default; transition: all 0.3s;
+}
+.float-icon:hover { background: rgba(255,255,255,0.25); transform: scale(1.1) !important; }
+.float-icon:nth-child(1) { animation-delay: 0s; }
+.float-icon:nth-child(2) { animation-delay: 0.4s; }
+.float-icon:nth-child(3) { animation-delay: 0.8s; }
+.float-icon:nth-child(4) { animation-delay: 1.2s; }
+.float-icon:nth-child(5) { animation-delay: 1.6s; }
+@keyframes floatIcon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.hero-stats {
+  display: flex; gap: 32px; margin-top: 40px;
+  animation: fadeUp 1.2s ease;
+}
+.h-stat { text-align: center; }
+.h-stat strong { display: block; font-size: 1.6rem; font-weight: 800; color: #fff; }
+.h-stat span { font-size: 0.75rem; color: rgba(255,255,255,0.7); }
+.hero-wave {
+  position: absolute; bottom: -1px; left: 0; right: 0;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── SECTIONS ─── */
+section { padding: 80px 5%; }
+.section-bg { background: #fff; }
+.section-header { text-align: center; margin-bottom: 56px; }
+.eyebrow {
+  display: inline-block; font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--royal); background: rgba(0,87,217,0.08);
+  padding: 5px 16px; border-radius: 20px; margin-bottom: 14px;
+}
+.section-header h2 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800;
+  color: var(--dark); line-height: 1.2; margin-bottom: 14px;
+}
+.section-header p { font-size: 1rem; color: var(--muted); max-width: 520px; margin: 0 auto; }
+
+/* ─── TICKER ─── */
+.ticker-wrap {
+  background: var(--gradient); padding: 12px 0; overflow: hidden;
+  position: relative;
+}
+.ticker {
+  display: flex; gap: 40px; animation: ticker 25s linear infinite;
+  white-space: nowrap; width: max-content;
+}
+.ticker-item {
+  color: #fff; font-size: 0.82rem; font-weight: 500;
+  display: flex; align-items: center; gap: 8px;
+}
+.ticker-dot { width: 5px; height: 5px; background: rgba(255,255,255,0.5); border-radius: 50%; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ─── CATEGORIES ─── */
+.cats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+}
+.cat-card {
+  background: #fff; border-radius: var(--card-radius);
+  padding: 28px 16px 20px; text-align: center;
+  box-shadow: var(--shadow); cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 2px solid transparent; position: relative; overflow: hidden;
+}
+.cat-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--gradient); opacity: 0; transition: opacity 0.3s;
+}
+.cat-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: var(--shadow-hover); border-color: var(--royal);
+}
+.cat-card:hover::before { opacity: 0.04; }
+.cat-icon {
+  width: 58px; height: 58px; border-radius: 16px;
+  background: linear-gradient(135deg, #EBF4FF, #CCE3FF);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.7rem; margin: 0 auto 12px;
+  transition: all 0.3s;
+}
+.cat-card:hover .cat-icon { background: var(--gradient); transform: rotate(5deg) scale(1.1); }
+.cat-card h4 { font-size: 0.82rem; font-weight: 600; color: var(--text); }
+.cat-count { font-size: 0.7rem; color: var(--muted); margin-top: 4px; }
+
+/* ─── PRODUCTS ─── */
+.products-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 22px;
+}
+.product-card {
+  background: #fff; border-radius: var(--card-radius);
+  overflow: hidden; box-shadow: var(--shadow);
+  transition: all 0.35s ease; cursor: pointer; position: relative;
+}
+.product-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); }
+.product-img {
+  height: 200px; background: linear-gradient(135deg, #EBF4FF 0%, #CCE3FF 100%);
+  display: flex; align-items: center; justify-content: center; font-size: 4rem;
+  overflow: hidden; position: relative;
+}
+.product-img-inner { transition: transform 0.4s ease; }
+.product-card:hover .product-img-inner { transform: scale(1.12); }
+.badge-discount {
+  position: absolute; top: 12px; left: 12px; background: #FF3B3B;
+  color: #fff; font-size: 0.7rem; font-weight: 700; padding: 4px 10px;
+  border-radius: 20px; z-index: 2;
+}
+.badge-new {
+  position: absolute; top: 12px; left: 12px; background: var(--gradient);
+  color: #fff; font-size: 0.7rem; font-weight: 700; padding: 4px 10px;
+  border-radius: 20px; z-index: 2;
+}
+.product-actions {
+  position: absolute; top: 12px; right: 12px; display: flex; flex-direction: column; gap: 6px;
+  opacity: 0; transition: all 0.3s; transform: translateX(10px);
+}
+.product-card:hover .product-actions { opacity: 1; transform: translateX(0); }
+.action-btn {
+  width: 34px; height: 34px; border-radius: 10px; background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  cursor: pointer; border: none; color: var(--text);
+  transition: all 0.2s;
+}
+.action-btn:hover { background: var(--royal); color: #fff; }
+.product-info { padding: 16px 18px 18px; }
+.product-cat { font-size: 0.7rem; color: var(--sky); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.product-name { font-size: 0.9rem; font-weight: 700; color: var(--dark); margin-bottom: 6px; line-height: 1.3; }
+.product-rating { display: flex; align-items: center; gap: 4px; margin-bottom: 10px; }
+.stars { color: #FFB800; font-size: 0.72rem; }
+.rating-count { font-size: 0.7rem; color: var(--muted); }
+.product-price { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.price-current { font-size: 1.15rem; font-weight: 800; color: var(--royal); }
+.price-old { font-size: 0.8rem; color: var(--muted); text-decoration: line-through; }
+.stock-status { font-size: 0.7rem; font-weight: 600; margin-bottom: 12px; }
+.in-stock { color: #22C55E; }
+.btn-add-cart {
+  width: 100%; padding: 10px; border-radius: 12px;
+  background: var(--gradient); color: #fff; border: none;
+  font-size: 0.82rem; font-weight: 700; cursor: pointer;
+  font-family: 'Poppins', sans-serif; transition: all 0.3s;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+}
+.btn-add-cart:hover {
+  box-shadow: 0 6px 20px rgba(0,87,217,0.4); transform: translateY(-2px);
+}
+.btn-add-cart:active {
+  transform: scale(0.97);
+}
+
+/* ─── FLASH SALE ─── */
+.flash-sale {
+  background: linear-gradient(135deg, #0A1628 0%, #112240 100%);
+  padding: 70px 5%; position: relative; overflow: hidden;
+}
+.flash-sale::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 30% 50%, rgba(0,87,217,0.3), transparent 60%),
+              radial-gradient(circle at 70% 30%, rgba(78,165,255,0.15), transparent 50%);
+}
+.flash-content { position: relative; z-index: 1; }
+.flash-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; flex-wrap: wrap; gap: 20px; }
+.flash-title { display: flex; align-items: center; gap: 14px; }
+.flash-icon { font-size: 2.5rem; animation: flashBlink 1s infinite; }
+@keyframes flashBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+.flash-title h2 { font-size: 2rem; font-weight: 900; color: #fff; }
+.flash-title p { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-top: 2px; }
+.countdown { display: flex; gap: 12px; }
+.count-unit {
+  background: rgba(255,255,255,0.08); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 14px;
+  padding: 16px 18px; text-align: center; min-width: 72px;
+}
+.count-unit strong { display: block; font-size: 2rem; font-weight: 900; color: var(--sky); line-height: 1; }
+.count-unit span { font-size: 0.65rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; }
+.flash-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 18px; }
+.flash-card {
+  background: rgba(255,255,255,0.06); backdrop-filter: blur(15px);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: var(--card-radius);
+  padding: 20px; text-align: center; transition: all 0.3s; cursor: pointer;
+  position: relative; overflow: hidden;
+}
+.flash-card:hover { background: rgba(255,255,255,0.12); transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,87,217,0.3); }
+.flash-card .emoji { font-size: 3rem; margin-bottom: 10px; display: block; }
+.flash-card h4 { color: #fff; font-size: 0.88rem; font-weight: 700; margin-bottom: 6px; }
+.flash-card .flash-price { color: var(--sky); font-size: 1.1rem; font-weight: 800; }
+.flash-card .flash-old { color: rgba(255,255,255,0.4); font-size: 0.78rem; text-decoration: line-through; }
+.flash-badge {
+  position: absolute; top: 12px; right: 12px;
+  background: #FF3B3B; color: #fff; font-size: 0.7rem; font-weight: 700;
+  padding: 3px 8px; border-radius: 8px;
+}
+.flash-progress { height: 5px; background: rgba(255,255,255,0.1); border-radius: 3px; margin-top: 10px; }
+.flash-progress-inner { height: 100%; background: var(--gradient); border-radius: 3px; }
+
+/* ─── WHY CHOOSE US ─── */
+.features-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; }
+.feature-card {
+  background: #fff; border-radius: var(--card-radius); padding: 32px 24px;
+  box-shadow: var(--shadow); text-align: center; transition: all 0.35s ease;
+  border: 2px solid transparent; cursor: default;
+}
+.feature-card:hover {
+  transform: translateY(-6px); box-shadow: var(--shadow-hover);
+  border-color: var(--royal);
+}
+.feature-icon {
+  width: 68px; height: 68px; border-radius: 20px;
+  background: linear-gradient(135deg, #EBF4FF, #CCE3FF);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem; margin: 0 auto 18px; transition: all 0.3s;
+}
+.feature-card:hover .feature-icon { background: var(--gradient); transform: rotate(-5deg) scale(1.1); }
+.feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: var(--dark); }
+.feature-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+/* ─── OFFERS ─── */
+.offers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
+.offer-card {
+  border-radius: var(--card-radius); padding: 32px 28px; position: relative;
+  overflow: hidden; cursor: pointer; transition: all 0.35s ease;
+}
+.offer-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); }
+.offer-card.blue { background: linear-gradient(135deg, #0057D9, #4EA5FF); }
+.offer-card.dark { background: linear-gradient(135deg, #0A1628, #112240); }
+.offer-card.light { background: linear-gradient(135deg, #EBF4FF, #CCE3FF); }
+.offer-card h3 { font-size: 1.5rem; font-weight: 900; margin-bottom: 6px; }
+.offer-card.blue h3, .offer-card.dark h3 { color: #fff; }
+.offer-card.light h3 { color: var(--royal); }
+.offer-card p { font-size: 0.85rem; margin-bottom: 18px; }
+.offer-card.blue p, .offer-card.dark p { color: rgba(255,255,255,0.75); }
+.offer-card.light p { color: var(--muted); }
+.offer-tag {
+  display: inline-block; background: rgba(255,255,255,0.2);
+  color: #fff; font-size: 0.75rem; font-weight: 700; padding: 5px 14px;
+  border-radius: 20px; margin-bottom: 14px;
+}
+.offer-card.light .offer-tag { background: rgba(0,87,217,0.1); color: var(--royal); }
+.offer-emoji { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 4.5rem; opacity: 0.3; }
+.btn-offer {
+  padding: 10px 22px; border-radius: 25px; font-size: 0.82rem; font-weight: 700;
+  cursor: pointer; border: none; font-family: 'Poppins', sans-serif; transition: all 0.25s;
+}
+.offer-card.blue .btn-offer, .offer-card.dark .btn-offer { background: #fff; color: var(--royal); }
+.offer-card.light .btn-offer { background: var(--gradient); color: #fff; }
+.btn-offer:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+
+/* ─── STATISTICS ─── */
+.stats-section {
+  background: var(--gradient); padding: 70px 5%; position: relative; overflow: hidden;
+}
+.stats-section::before {
+  content: ''; position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.stats-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;
+  position: relative; z-index: 1;
+}
+.stat-item { text-align: center; }
+.stat-number {
+  font-size: 3rem; font-weight: 900; color: #fff;
+  display: block; line-height: 1;
+}
+.stat-label { font-size: 0.9rem; color: rgba(255,255,255,0.75); margin-top: 8px; font-weight: 500; }
+.stat-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
+
+/* ─── TESTIMONIALS ─── */
+.testimonials-container { overflow: hidden; }
+.testimonials-track {
+  display: flex; gap: 22px; animation: slide 30s linear infinite;
+  width: max-content;
+}
+.testimonials-track:hover { animation-play-state: paused; }
+@keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.testimonial-card {
+  background: #fff; border-radius: var(--card-radius); padding: 28px 26px;
+  box-shadow: var(--shadow); min-width: 320px; border: 2px solid transparent;
+  transition: all 0.3s;
+}
+.testimonial-card:hover { border-color: var(--royal); transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+.testi-stars { color: #FFB800; font-size: 0.9rem; margin-bottom: 14px; }
+.testi-text { font-size: 0.88rem; color: var(--muted); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+.testi-author { display: flex; align-items: center; gap: 12px; }
+.testi-avatar {
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--gradient); display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; color: #fff; font-weight: 700; flex-shrink: 0;
+}
+.testi-name { font-size: 0.88rem; font-weight: 700; color: var(--dark); }
+.testi-role { font-size: 0.72rem; color: var(--muted); }
+.verified { display: inline-flex; align-items: center; gap: 4px; font-size: 0.68rem; color: var(--sky); font-weight: 600; margin-top: 2px; }
+
+/* ─── BRANDS ─── */
+.brands-wrap { overflow: hidden; padding: 40px 0; }
+.brands-track {
+  display: flex; gap: 40px; align-items: center;
+  animation: brands 20s linear infinite; width: max-content;
+}
+.brands-track:hover { animation-play-state: paused; }
+@keyframes brands { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.brand-chip {
+  background: #fff; border-radius: 14px; padding: 16px 28px;
+  box-shadow: var(--shadow); font-size: 0.9rem; font-weight: 700;
+  color: var(--muted); white-space: nowrap; display: flex; align-items: center; gap: 10px;
+  cursor: pointer; transition: all 0.3s; border: 2px solid transparent;
+}
+.brand-chip:hover { border-color: var(--royal); color: var(--royal); transform: translateY(-3px); }
+
+/* ─── GALLERY ─── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 160px);
+  gap: 14px;
+}
+.gallery-item {
+  border-radius: var(--card-radius); overflow: hidden;
+  background: linear-gradient(135deg, #CCE3FF, #EBF4FF);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3rem; cursor: pointer; position: relative;
+  transition: all 0.35s ease;
+}
+.gallery-item:hover { transform: scale(0.98); box-shadow: var(--shadow-hover); }
+.gallery-item .overlay {
+  position: absolute; inset: 0; background: rgba(0,87,217,0.7);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.3s; color: #fff; font-size: 1.5rem;
+}
+.gallery-item:hover .overlay { opacity: 1; }
+.gallery-item.span2 { grid-column: span 2; }
+.gallery-item.span2r { grid-row: span 2; }
+
+/* ─── APP SECTION ─── */
+.app-section {
+  background: linear-gradient(135deg, #0057D9, #003399);
+  padding: 80px 5%; border-radius: 0; position: relative; overflow: hidden;
+}
+.app-section::after {
+  content: ''; position: absolute; right: -100px; top: -100px;
+  width: 400px; height: 400px; border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+}
+.app-inner { display: flex; align-items: center; justify-content: space-between; gap: 60px; flex-wrap: wrap; }
+.app-content { max-width: 500px; }
+.app-content h2 { font-size: 2.2rem; font-weight: 900; color: #fff; margin-bottom: 14px; }
+.app-content p { color: rgba(255,255,255,0.75); font-size: 0.95rem; line-height: 1.7; margin-bottom: 28px; }
+.app-features { list-style: none; margin-bottom: 28px; }
+.app-features li {
+  color: rgba(255,255,255,0.85); font-size: 0.88rem; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 10px;
+}
+.app-features i { color: #FFD700; }
+.app-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+.app-btn {
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.25);
+  backdrop-filter: blur(10px); border-radius: 14px; padding: 12px 22px;
+  cursor: pointer; transition: all 0.3s; text-decoration: none;
+}
+.app-btn:hover { background: rgba(255,255,255,0.22); transform: translateY(-3px); }
+.app-btn i { font-size: 1.8rem; color: #fff; }
+.app-btn-text small { font-size: 0.65rem; color: rgba(255,255,255,0.7); display: block; }
+.app-btn-text strong { font-size: 0.95rem; color: #fff; font-weight: 700; }
+.app-mockup { font-size: 8rem; position: relative; z-index: 1; text-align: center; }
+
+/* ─── NEWSLETTER ─── */
+.newsletter-section {
+  background: var(--gradient-soft); padding: 80px 5%;
+}
+.newsletter-inner {
+  background: var(--gradient); border-radius: 28px; padding: 56px 40px;
+  text-align: center; position: relative; overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,87,217,0.3);
+}
+.newsletter-inner::before {
+  content: ''; position: absolute; top: -80px; right: -80px;
+  width: 250px; height: 250px; border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+}
+.newsletter-inner h2 { font-size: 2rem; font-weight: 900; color: #fff; margin-bottom: 10px; }
+.newsletter-inner p { color: rgba(255,255,255,0.8); margin-bottom: 30px; }
+.newsletter-form { display: flex; gap: 12px; max-width: 500px; margin: 0 auto; flex-wrap: wrap; }
+.newsletter-form input {
+  flex: 1; min-width: 200px; padding: 14px 22px; border-radius: 50px;
+  border: none; outline: none; font-family: 'Poppins', sans-serif;
+  font-size: 0.88rem; background: rgba(255,255,255,0.95);
+}
+.newsletter-form button {
+  padding: 14px 28px; border-radius: 50px; border: none;
+  background: var(--dark); color: #fff; font-family: 'Poppins', sans-serif;
+  font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: all 0.3s;
+  white-space: nowrap;
+}
+.newsletter-form button:hover { background: #0A2045; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.25); }
+
+/* ─── CONTACT ─── */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.contact-info h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 20px; color: var(--dark); }
+.contact-item {
+  display: flex; gap: 14px; margin-bottom: 20px; align-items: flex-start;
+}
+.contact-icon-wrap {
+  width: 46px; height: 46px; background: linear-gradient(135deg, #EBF4FF, #CCE3FF);
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 1rem; color: var(--royal);
+}
+.contact-item h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 3px; color: var(--dark); }
+.contact-item p { font-size: 0.82rem; color: var(--muted); }
+.hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 16px; }
+.hours-item { font-size: 0.8rem; color: var(--muted); }
+.hours-item strong { color: var(--dark); font-size: 0.8rem; }
+.contact-map {
+  height: 220px; background: linear-gradient(135deg, #EBF4FF, #CCE3FF);
+  border-radius: 16px; margin-bottom: 20px; display: flex;
+  align-items: center; justify-content: center; font-size: 4rem;
+  overflow: hidden; position: relative;
+}
+.map-placeholder { text-align: center; }
+.map-placeholder p { font-size: 0.8rem; color: var(--muted); margin-top: 8px; }
+.contact-form input, .contact-form textarea, .contact-form select {
+  width: 100%; padding: 13px 18px; border: 2px solid #E2E8F0;
+  border-radius: 12px; font-family: 'Poppins', sans-serif; font-size: 0.85rem;
+  outline: none; margin-bottom: 14px; background: #fff; transition: border-color 0.2s;
+  color: var(--text);
+}
+.contact-form input:focus, .contact-form textarea:focus { border-color: var(--royal); }
+.contact-form textarea { height: 110px; resize: none; }
+.contact-form button {
+  width: 100%; padding: 14px; border-radius: 12px; border: none;
+  background: var(--gradient); color: #fff; font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.3s;
+}
+.contact-form button:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,87,217,0.35); }
+.social-links { display: flex; gap: 10px; margin-top: 20px; }
+.social-link {
+  width: 40px; height: 40px; border-radius: 12px; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; font-size: 1rem;
+  transition: all 0.25s; text-decoration: none; color: #fff;
+}
+.social-link.fb { background: #1877F2; }
+.social-link.ig { background: linear-gradient(135deg, #E1306C, #833AB4); }
+.social-link.tw { background: #1DA1F2; }
+.social-link.wa { background: #25D366; }
+.social-link.yt { background: #FF0000; }
+.social-link:hover { transform: translateY(-3px) scale(1.1); }
+
+/* ─── FAQ ─── */
+.faq-list { max-width: 800px; margin: 0 auto; }
+.faq-item {
+  background: #fff; border-radius: 14px; margin-bottom: 12px;
+  box-shadow: var(--shadow); overflow: hidden;
+}
+.faq-question {
+  padding: 20px 24px; display: flex; justify-content: space-between; align-items: center;
+  cursor: pointer; font-weight: 700; font-size: 0.9rem; color: var(--dark);
+}
+.faq-question:hover { color: var(--royal); }
+.faq-question i { transition: transform 0.3s; color: var(--royal); }
+.faq-item.open .faq-question i { transform: rotate(180deg); }
+.faq-answer {
+  display: none; padding: 0 24px 20px; font-size: 0.85rem;
+  color: var(--muted); line-height: 1.7;
+}
+.faq-item.open .faq-answer { display: block; }
+
+/* ─── FOOTER ─── */
+footer {
+  background: linear-gradient(135deg, #0A1628 0%, #112240 100%);
+  padding: 70px 5% 0;
+}
+.footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr; gap: 40px;
+  padding-bottom: 50px; border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.footer-brand p { color: rgba(255,255,255,0.55); font-size: 0.83rem; line-height: 1.8; margin: 16px 0 20px; max-width: 280px; }
+.footer-h { font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 1.5px; }
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 10px; }
+.footer-links a { color: rgba(255,255,255,0.55); font-size: 0.82rem; text-decoration: none; transition: all 0.2s; display: flex; align-items: center; gap: 7px; }
+.footer-links a:hover { color: var(--sky); padding-left: 4px; }
+.footer-links a i { font-size: 0.6rem; color: var(--sky); }
+.footer-contact-item { display: flex; gap: 10px; margin-bottom: 14px; align-items: flex-start; }
+.footer-contact-item i { color: var(--sky); margin-top: 3px; flex-shrink: 0; font-size: 0.85rem; }
+.footer-contact-item span { color: rgba(255,255,255,0.6); font-size: 0.8rem; line-height: 1.5; }
+.footer-bottom {
+  padding: 22px 0; display: flex; justify-content: space-between;
+  align-items: center; flex-wrap: gap; gap: 16px;
+}
+.footer-copy { color: rgba(255,255,255,0.4); font-size: 0.78rem; }
+.footer-copy a { color: var(--sky); text-decoration: none; }
+.payment-icons { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.payment-icons span {
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; padding: 5px 12px; color: rgba(255,255,255,0.6);
+  font-size: 0.72rem; font-weight: 600;
+}
+
+/* ─── WHATSAPP FLOAT ─── */
+.whatsapp-float {
+  position: fixed; bottom: 28px; right: 28px; z-index: 999;
+  width: 58px; height: 58px; background: #25D366; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; color: #fff; cursor: pointer; text-decoration: none;
+  box-shadow: 0 6px 25px rgba(37,211,102,0.5); animation: bounce 2s ease-in-out infinite;
+  border: none;
+}
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.whatsapp-float:hover { animation: none; transform: scale(1.1); }
+
+/* ─── MINI CART DRAWER ─── */
+.cart-drawer {
+  position: fixed; right: 0; top: 0; bottom: 0; width: 380px;
+  background: #fff; z-index: 2000; box-shadow: -10px 0 60px rgba(0,0,0,0.2);
+  transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  display: flex; flex-direction: column;
+}
+.cart-drawer.open { transform: translateX(0); }
+.cart-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1999;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.cart-overlay.open { opacity: 1; pointer-events: all; }
+.drawer-header {
+  padding: 24px; border-bottom: 1px solid #E2E8F0;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.drawer-header h3 { font-size: 1rem; font-weight: 800; color: var(--dark); }
+.drawer-close { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--muted); }
+.cart-items { flex: 1; overflow-y: auto; padding: 20px; }
+.cart-item { display: flex; gap: 14px; margin-bottom: 18px; align-items: center; }
+.cart-item-img { width: 60px; height: 60px; background: linear-gradient(135deg, #EBF4FF, #CCE3FF); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0; }
+.cart-item-info { flex: 1; }
+.cart-item-name { font-size: 0.82rem; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+.cart-item-price { font-size: 0.9rem; font-weight: 800; color: var(--royal); }
+.cart-item-remove { background: none; border: none; color: #FF3B3B; cursor: pointer; font-size: 0.8rem; }
+.cart-footer { padding: 20px; border-top: 1px solid #E2E8F0; }
+.cart-total { display: flex; justify-content: space-between; margin-bottom: 16px; font-weight: 800; font-size: 1rem; }
+.cart-total span:last-child { color: var(--royal); }
+.btn-checkout {
+  width: 100%; padding: 14px; border-radius: 12px; border: none;
+  background: var(--gradient); color: #fff; font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.3s;
+}
+.btn-checkout:hover { box-shadow: 0 6px 20px rgba(0,87,217,0.4); }
+
+/* ─── SCROLL TO TOP ─── */
+#scroll-top {
+  position: fixed; bottom: 100px; right: 28px; width: 44px; height: 44px;
+  background: var(--gradient); border-radius: 12px; border: none;
+  color: #fff; font-size: 1rem; cursor: pointer; z-index: 998;
+  box-shadow: 0 4px 20px rgba(0,87,217,0.4); opacity: 0; transition: all 0.3s;
+  display: flex; align-items: center; justify-content: center;
+}
+#scroll-top.visible { opacity: 1; }
+#scroll-top:hover { transform: translateY(-3px); }
+
+/* ─── TOAST ─── */
+.toast {
+  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(80px);
+  background: var(--dark); color: #fff; padding: 12px 24px; border-radius: 50px;
+  font-size: 0.85rem; font-weight: 600; z-index: 3000; transition: all 0.4s;
+  display: flex; align-items: center; gap: 10px; white-space: nowrap;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast i { color: var(--sky); }
+
+/* ─── REVEAL ANIMATION ─── */
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
+  .gallery-item.span2, .gallery-item.span2r { grid-column: span 1; grid-row: span 1; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-search { display: none; }
+  .hamburger { display: flex; }
+  nav.scrolled .hamburger span { background: var(--dark); }
+  .hero { padding: 120px 5% 60px; }
+  .hero-floating-icons { display: none; }
+  .hero-stats { gap: 20px; }
+  .cats-grid { grid-template-columns: repeat(3, 1fr); }
+  .footer-top { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .flash-header { flex-direction: column; align-items: flex-start; }
+  section { padding: 60px 5%; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .cart-drawer { width: 100%; }
+  .app-inner { justify-content: center; text-align: center; }
+  .app-features li { justify-content: center; }
+  .app-btns { justify-content: center; }
+}
+@media (max-width: 480px) {
+  .cats-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { font-size: 2rem; }
+  .countdown { gap: 8px; }
+  .count-unit { min-width: 60px; padding: 12px 14px; }
+  .count-unit strong { font-size: 1.6rem; }
+}
+
+/* ─── MOBILE MENU ─── */
+.mobile-menu {
+  position: fixed; inset: 0; background: #fff; z-index: 1500;
+  padding: 100px 5% 40px; display: none; flex-direction: column; gap: 10px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  text-decoration: none; font-size: 1.1rem; font-weight: 600; color: var(--dark);
+  padding: 14px 0; border-bottom: 1px solid #E2E8F0; display: flex; justify-content: space-between;
+}
+.mobile-menu-close {
+  position: absolute; top: 20px; right: 5%; background: none; border: none;
+  font-size: 1.5rem; cursor: pointer; color: var(--dark);
+}
+</style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS -->
+<div id="progress-bar"></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toast-msg">Item added to cart!</span></div>
+
+<!-- CART OVERLAY -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="drawer-header">
+    <h3>🛒 Your Cart (<span id="cart-count-drawer">0</span> items)</h3>
+    <button class="drawer-close" onclick="toggleCart()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="cart-items" id="cart-items-list">
+    <div style="text-align:center;padding:40px 20px;color:var(--muted);">
+      <div style="font-size:3rem;margin-bottom:14px;">🛒</div>
+      <p style="font-size:0.88rem;">Your cart is empty</p>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total"><span>Total</span><span id="cart-total-price">Rs. 0</span></div>
+    <button class="btn-checkout"><i class="fas fa-lock"></i> Secure Checkout</button>
+  </div>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" onclick="toggleMobileMenu()"><i class="fas fa-times"></i></button>
+  <a href="#home">Home <i class="fas fa-chevron-right"></i></a>
+  <a href="#products">Products <i class="fas fa-chevron-right"></i></a>
+  <a href="#categories">Categories <i class="fas fa-chevron-right"></i></a>
+  <a href="#offers">Offers <i class="fas fa-chevron-right"></i></a>
+  <a href="#about">About Us <i class="fas fa-chevron-right"></i></a>
+  <a href="#gallery">Gallery <i class="fas fa-chevron-right"></i></a>
+  <a href="#testimonials">Testimonials <i class="fas fa-chevron-right"></i></a>
+  <a href="#contact">Contact <i class="fas fa-chevron-right"></i></a>
+  <div style="display:flex;gap:10px;margin-top:16px;">
+    <button class="btn-nav outline" style="flex:1;border-color:var(--royal);color:var(--royal);">Login</button>
+    <button class="btn-nav fill" style="flex:1;">Register</button>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="logo-icon">A</div>
+    <span>Awami<small>General Store</small></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#categories">Categories</a></li>
+    <li><a href="#offers">Offers</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="nav-search">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Search products...">
+    </div>
+    <button class="dark-toggle" onclick="toggleDark()" title="Toggle Dark Mode">🌙</button>
+    <button class="btn-nav outline">Login</button>
+    <button class="btn-nav fill">Register</button>
+    <button class="cart-btn" onclick="toggleCart()">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="cart-count" id="nav-cart-count">0</span>
+    </button>
+    <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker-wrap" style="margin-top:72px;">
+  <div class="ticker" id="ticker">
+    <span class="ticker-item">🚚 Free Delivery on orders above Rs. 500 <span class="ticker-dot"></span></span>
+    <span class="ticker-item">🎉 Eid Special Sale – Up to 40% Off <span class="ticker-dot"></span></span>
+    <span class="ticker-item">🛒 New Arrival: Nestle, Sunsilk, Dalda & more <span class="ticker-dot"></span></span>
+    <span class="ticker-item">⭐ Trusted by 10,000+ Happy Customers <span class="ticker-dot"></span></span>
+    <span class="ticker-item">📞 WhatsApp Order: 0311-1234567 <span class="ticker-dot"></span></span>
+    <span class="ticker-item">🧴 Fresh Dairy Products Daily <span class="ticker-dot"></span></span>
+    <span class="ticker-item">🚚 Free Delivery on orders above Rs. 500 <span class="ticker-dot"></span></span>
+    <span class="ticker-item">🎉 Eid Special Sale – Up to 40% Off <span class="ticker-dot"></span></span>
+    <span class="ticker-item">🛒 New Arrival: Nestle, Sunsilk, Dalda & more <span class="ticker-dot"></span></span>
+    <span class="ticker-item">⭐ Trusted by 10,000+ Happy Customers <span class="ticker-dot"></span></span>
+    <span class="ticker-item">📞 WhatsApp Order: 0311-1234567 <span class="ticker-dot"></span></span>
+    <span class="ticker-item">🧴 Fresh Dairy Products Daily <span class="ticker-dot"></span></span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-particles" id="heroParticles"></div>
+  <div class="hero-shapes">
+    <div class="shape" style="width:500px;height:500px;right:-100px;top:-100px;"></div>
+    <div class="shape" style="width:300px;height:300px;left:-80px;bottom:-80px;animation-delay:2s;"></div>
+    <div class="shape" style="width:200px;height:200px;right:30%;top:20%;animation-delay:1s;"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge"><i class="fas fa-star"></i> Pakistan's Most Trusted General Store</div>
+    <h1>Everything Your Home <span>Needs</span> — All in One Store</h1>
+    <p>Quality household products at affordable prices with fast delivery to your doorstep. From groceries to cosmetics, we have it all.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+        <i class="fas fa-shopping-cart"></i> Shop Now
+      </button>
+      <button class="btn-outline-white" onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">
+        <i class="fas fa-th-large"></i> View Categories
+      </button>
+    </div>
+    <div class="hero-stats">
+      <div class="h-stat"><strong>10K+</strong><span>Happy Customers</span></div>
+      <div class="h-stat"><strong>5K+</strong><span>Products</span></div>
+      <div class="h-stat"><strong>20+</strong><span>Categories</span></div>
+      <div class="h-stat"><strong>15 Yrs</strong><span>Experience</span></div>
+    </div>
+  </div>
+  <div class="hero-floating-icons">
+    <div class="float-icon">🛒</div>
+    <div class="float-icon">🏠</div>
+    <div class="float-icon">🧴</div>
+    <div class="float-icon">🥛</div>
+    <div class="float-icon">⭐</div>
+  </div>
+  <svg class="hero-wave" viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,40 C360,80 1080,0 1440,40 L1440,60 L0,60 Z" fill="#F0F6FF"/>
+  </svg>
+</section>
+
+<!-- CATEGORIES -->
+<section id="categories" class="section-bg">
+  <div class="section-header reveal">
+    <span class="eyebrow">Browse by Category</span>
+    <h2>Shop What You Need</h2>
+    <p>Explore our wide range of categories covering every corner of your home</p>
+  </div>
+  <div class="cats-grid reveal">
+    <div class="cat-card" onclick="showToast('Browsing Groceries...')">
+      <div class="cat-icon">🛒</div>
+      <h4>Groceries</h4>
+      <p class="cat-count">320+ items</p>
+    </div>
+    <div class="cat-card" onclick="showToast('Browsing Cleaning Supplies...')">
+      <div class="cat-icon">🧹</div>
+      <h4>Cleaning Supplies</h4>
+      <p class="cat-count">180+ items</p>
+    </div>
+    <div class="cat-card" onclick="showToast('Browsing Kitchen...')">
+      <div class="cat-icon">🍳</div>
+      <h4>Kitchen</h4>
+      <p class="cat-count">240+ items</p>
+    </div>
+    <div class="cat-card" onclick="showToast('Browsing Bathroom...')">
+      <div class="cat-icon">🚿</div>
+      <h4>Bathroom</h4>
+      <p class="cat-count">95+ items</p>
+    </div>
+    <div class="cat-card" onclick="showToast('Browsing Personal Care...')">
+      <div class="cat-icon">🧴</div>
+      <h4>Personal Care</h4>
+      <p class="cat-count">210+ items</p>
+    </div>
+    <div class="cat-card" onclick="showToast('Browsing Baby Care...')">
+      <div class="cat-icon">👶</div>
+      <h4>Baby Care</h4>
+      <p class="cat-count">140+ items</p>
+    </div>
+    <div class="cat-card" onclick="showToast('Browsing Plastic Items...')">
+      <div class="cat-icon">🪣</div>
+      <h4>Plastic Items</h4>
+      <p class="cat-count">175+ items</p>
+    </div>
+    <div class="cat-card" onclick="showToast('Browsing Stationery...')">
+      <div class="cat-icon">✏️</div>
+      <h4>Stationery</h4>
+      <p class="cat-count">90+ items</p>
+    </div>
+    <div class="cat-card" onclick="showToast('Browsing Cosmetics...')">
+      <div class="cat-icon">💄</div>
+      <h4>Cosmetics</h4>
+      <p class="cat-count">260+ items</p>
+    </div>
+    <div class="cat-card" onclick="showToast('Browsing Beverages...')">
+      <div class="cat-icon">☕</div>
+      <h4>Beverages</h4>
+      <p class="cat-count">130+ items</p>
+    </div>
+    <div class="cat-card" onclick="showToast('Browsing Frozen Food...')">
+      <div class="cat-icon">🧊</div>
+      <h4>Frozen Food</h4>
+      <p class="cat-count">80+ items</p>
+    </div>
+    <div class="cat-card" onclick="showToast('Browsing Dry Fruits...')">
+      <div class="cat-icon">🥜</div>
+      <h4>Dry Fruits</h4>
+      <p class="cat-count">55+ items</p>
+    </div>
+    <div class="cat-card" onclick="showToast('Browsing Daily Essentials...')">
+      <div class="cat-icon">📦</div>
+      <h4>Daily Essentials</h4>
+      <p class="cat-count">400+ items</p>
+    </div>
+    <div class="cat-card" onclick="showToast('Browsing Pet Food...')">
+      <div class="cat-icon">🐾</div>
+      <h4>Pet Food</h4>
+      <p class="cat-count">45+ items</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section id="products" style="padding:80px 5%; background:var(--bg);">
+  <div class="section-header reveal">
+    <span class="eyebrow">Featured Products</span>
+    <h2>Best Sellers This Week</h2>
+    <p>Handpicked quality products at the best prices in the market</p>
+  </div>
+  <div class="products-grid reveal" id="productsGrid"></div>
+</section>
+
+<!-- FLASH SALE -->
+<div class="flash-sale" id="flash">
+  <div class="flash-content">
+    <div class="flash-header">
+      <div class="flash-title">
+        <span class="flash-icon">⚡</span>
+        <div>
+          <h2>Flash Sale</h2>
+          <p>Grab these deals before they're gone!</p>
+        </div>
+      </div>
+      <div class="countdown">
+        <div class="count-unit"><strong id="cd-h">05</strong><span>Hours</span></div>
+        <div class="count-unit"><strong id="cd-m">47</strong><span>Mins</span></div>
+        <div class="count-unit"><strong id="cd-s">30</strong><span>Secs</span></div>
+      </div>
+    </div>
+    <div class="flash-grid reveal">
+      <div class="flash-card" onclick="addToCart('Sunsilk Shampoo', 285, '🧴')">
+        <span class="flash-badge">-30%</span>
+        <span class="emoji">🧴</span>
+        <h4>Sunsilk Shampoo 360ml</h4>
+        <div class="flash-price">Rs. 285</div>
+        <div class="flash-old">Rs. 410</div>
+        <div class="flash-progress"><div class="flash-progress-inner" style="width:72%"></div></div>
+        <div style="color:rgba(255,255,255,0.5);font-size:0.68rem;margin-top:5px;">72% sold</div>
+      </div>
+      <div class="flash-card" onclick="addToCart('Dalda Cooking Oil', 520, '🛢️')">
+        <span class="flash-badge">-20%</span>
+        <span class="emoji">🛢️</span>
+        <h4>Dalda Cooking Oil 3L</h4>
+        <div class="flash-price">Rs. 520</div>
+        <div class="flash-old">Rs. 650</div>
+        <div class="flash-progress"><div class="flash-progress-inner" style="width:55%"></div></div>
+        <div style="color:rgba(255,255,255,0.5);font-size:0.68rem;margin-top:5px;">55% sold</div>
+      </div>
+      <div class="flash-card" onclick="addToCart('Ariel Detergent', 340, '🧺')">
+        <span class="flash-badge">-25%</span>
+        <span class="emoji">🧺</span>
+        <h4>Ariel Detergent 1kg</h4>
+        <div class="flash-price">Rs. 340</div>
+        <div class="flash-old">Rs. 455</div>
+        <div class="flash-progress"><div class="flash-progress-inner" style="width:88%"></div></div>
+        <div style="color:rgba(255,255,255,0.5);font-size:0.68rem;margin-top:5px;">88% sold – hurry!</div>
+      </div>
+      <div class="flash-card" onclick="addToCart('Nestle Milk Pack', 180, '🥛')">
+        <span class="flash-badge">-15%</span>
+        <span class="emoji">🥛</span>
+        <h4>Nestle Milk Pack 1L</h4>
+        <div class="flash-price">Rs. 180</div>
+        <div class="flash-old">Rs. 212</div>
+        <div class="flash-progress"><div class="flash-progress-inner" style="width:40%"></div></div>
+        <div style="color:rgba(255,255,255,0.5);font-size:0.68rem;margin-top:5px;">40% sold</div>
+      </div>
+      <div class="flash-card" onclick="addToCart('Sooper Biscuits', 55, '🍪')">
+        <span class="flash-badge">-10%</span>
+        <span class="emoji">🍪</span>
+        <h4>Sooper Biscuits 3-Pack</h4>
+        <div class="flash-price">Rs. 55</div>
+        <div class="flash-old">Rs. 62</div>
+        <div class="flash-progress"><div class="flash-progress-inner" style="width:60%"></div></div>
+        <div style="color:rgba(255,255,255,0.5);font-size:0.68rem;margin-top:5px;">60% sold</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY CHOOSE US -->
+<section class="section-bg" id="about">
+  <div class="section-header reveal">
+    <span class="eyebrow">Why Choose Us</span>
+    <h2>The Awami Difference</h2>
+    <p>We're not just a store — we're your trusted household partner</p>
+  </div>
+  <div class="features-grid reveal">
+    <div class="feature-card"><div class="feature-icon">⭐</div><h3>Premium Quality</h3><p>Only authentic, top-grade products from verified suppliers.</p></div>
+    <div class="feature-card"><div class="feature-icon">💰</div><h3>Affordable Prices</h3><p>Competitive pricing with regular deals that save you money.</p></div>
+    <div class="feature-card"><div class="feature-icon">🚚</div><h3>Fast Delivery</h3><p>Same-day delivery available within city limits, every day.</p></div>
+    <div class="feature-card"><div class="feature-icon">🔒</div><h3>Secure Payment</h3><p>Safe & secure checkout with multiple payment options.</p></div>
+    <div class="feature-card"><div class="feature-icon">🌿</div><h3>Fresh Products</h3><p>Dairy, grocery and perishables sourced fresh daily.</p></div>
+    <div class="feature-card"><div class="feature-icon">🏅</div><h3>Trusted Store</h3><p>15 years of serving thousands of families with integrity.</p></div>
+    <div class="feature-card"><div class="feature-icon">🕐</div><h3>24/7 Support</h3><p>Round-the-clock customer care via WhatsApp or phone.</p></div>
+    <div class="feature-card"><div class="feature-icon">↩️</div><h3>Easy Returns</h3><p>Hassle-free 7-day return policy on all eligible products.</p></div>
+  </div>
+</section>
+
+<!-- SPECIAL OFFERS -->
+<section id="offers" style="background:var(--bg);padding:80px 5%;">
+  <div class="section-header reveal">
+    <span class="eyebrow">Special Offers</span>
+    <h2>Deals You Can't Miss</h2>
+    <p>Limited-time promotions crafted for every kind of shopper</p>
+  </div>
+  <div class="offers-grid reveal">
+    <div class="offer-card blue">
+      <span class="offer-tag">🔥 Limited Time</span>
+      <h3>Buy 2 Get 1 Free</h3>
+      <p>On all shampoos and personal care items this weekend only.</p>
+      <button class="btn-offer" onclick="showToast('Offer added to cart!')">Shop Now</button>
+      <span class="offer-emoji">🧴</span>
+    </div>
+    <div class="offer-card dark">
+      <span class="offer-tag">👨‍👩‍👧‍👦 Family Pack</span>
+      <h3>Family Saver Bundle</h3>
+      <p>Save Rs. 300 when you buy our curated family essentials pack.</p>
+      <button class="btn-offer" onclick="showToast('Bundle added!')">Get Bundle</button>
+      <span class="offer-emoji">🏠</span>
+    </div>
+    <div class="offer-card light">
+      <span class="offer-tag">📅 Weekend Deal</span>
+      <h3>30% Off Groceries</h3>
+      <p>Every Saturday & Sunday — stock up on rice, flour, and pulses.</p>
+      <button class="btn-offer" onclick="showToast('Deal activated!')">Grab Deal</button>
+      <span class="offer-emoji">🛒</span>
+    </div>
+    <div class="offer-card blue" style="background:linear-gradient(135deg,#FF6B35,#FF3B3B);">
+      <span class="offer-tag" style="background:rgba(255,255,255,0.2);">🌙 Eid Special</span>
+      <h3>Eid Mega Sale</h3>
+      <p>Up to 40% off on cosmetics, clothing essentials & gifts.</p>
+      <button class="btn-offer" onclick="showToast('Eid offer applied!')">Shop Now</button>
+      <span class="offer-emoji">🎁</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATISTICS -->
+<div class="stats-section">
+  <div class="stats-grid reveal">
+    <div class="stat-item">
+      <span class="stat-icon">👥</span>
+      <span class="stat-number counter" data-target="10000">0</span>
+      <div class="stat-label">Happy Customers</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-icon">📦</span>
+      <span class="stat-number counter" data-target="5000">0</span>
+      <div class="stat-label">Products Available</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-icon">🏷️</span>
+      <span class="stat-number counter" data-target="20">0</span>
+      <div class="stat-label">Product Categories</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-icon">📅</span>
+      <span class="stat-number counter" data-target="15">0</span>
+      <div class="stat-label">Years Experience</div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="section-bg" id="testimonials">
+  <div class="section-header reveal">
+    <span class="eyebrow">Customer Reviews</span>
+    <h2>What Our Customers Say</h2>
+    <p>Real reviews from real families who trust Awami General Store</p>
+  </div>
+  <div class="testimonials-container reveal">
+    <div class="testimonials-track" id="testiTrack"></div>
+  </div>
+</section>
+
+<!-- BRANDS -->
+<section style="background:var(--bg);padding:60px 5%;">
+  <div class="section-header reveal">
+    <span class="eyebrow">Our Brands</span>
+    <h2>Top Brands We Carry</h2>
+    <p>Authentic products from Pakistan's most trusted names</p>
+  </div>
+  <div class="brands-wrap reveal">
+    <div class="brands-track" id="brandsTrack"></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section-bg" id="gallery">
+  <div class="section-header reveal">
+    <span class="eyebrow">Store Gallery</span>
+    <h2>Our Store & Products</h2>
+    <p>A glimpse of what awaits you at Awami General Store</p>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item span2" style="background:linear-gradient(135deg,#CCE3FF,#EBF4FF)">
+      🛒<div class="overlay"><i class="fas fa-search-plus"></i></div>
+    </div>
+    <div class="gallery-item span2r" style="background:linear-gradient(135deg,#EBF4FF,#D4EDFF)">
+      🍳<div class="overlay"><i class="fas fa-search-plus"></i></div>
+    </div>
+    <div class="gallery-item" style="background:linear-gradient(135deg,#F0F9FF,#CCE3FF)">
+      🧴<div class="overlay"><i class="fas fa-search-plus"></i></div>
+    </div>
+    <div class="gallery-item" style="background:linear-gradient(135deg,#EBF4FF,#CCE3FF)">
+      🥛<div class="overlay"><i class="fas fa-search-plus"></i></div>
+    </div>
+    <div class="gallery-item" style="background:linear-gradient(135deg,#CCE3FF,#BDD9FF)">
+      🧹<div class="overlay"><i class="fas fa-search-plus"></i></div>
+    </div>
+    <div class="gallery-item" style="background:linear-gradient(135deg,#E0F0FF,#CCE3FF)">
+      💄<div class="overlay"><i class="fas fa-search-plus"></i></div>
+    </div>
+    <div class="gallery-item" style="background:linear-gradient(135deg,#CCE3FF,#EBF4FF)">
+      ☕<div class="overlay"><i class="fas fa-search-plus"></i></div>
+    </div>
+    <div class="gallery-item" style="background:linear-gradient(135deg,#BDD9FF,#EBF4FF)">
+      🥜<div class="overlay"><i class="fas fa-search-plus"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- APP PROMO -->
+<div class="app-section">
+  <div class="app-inner">
+    <div class="app-content">
+      <div class="eyebrow" style="background:rgba(255,255,255,0.15);color:#fff;">📱 Mobile App</div>
+      <h2>Shop Anytime, Anywhere</h2>
+      <p>Download the Awami General Store app and get exclusive app-only discounts, fast reordering, and real-time order tracking.</p>
+      <ul class="app-features">
+        <li><i class="fas fa-check-circle"></i> App-only exclusive deals every week</li>
+        <li><i class="fas fa-check-circle"></i> Faster checkout with saved addresses</li>
+        <li><i class="fas fa-check-circle"></i> Live order tracking & notifications</li>
+        <li><i class="fas fa-check-circle"></i> Loyalty points on every purchase</li>
+      </ul>
+      <div class="app-btns">
+        <a class="app-btn" href="#">
+          <i class="fab fa-apple"></i>
+          <div class="app-btn-text"><small>Download on the</small><strong>App Store</strong></div>
+        </a>
+        <a class="app-btn" href="#">
+          <i class="fab fa-google-play"></i>
+          <div class="app-btn-text"><small>Get it on</small><strong>Google Play</strong></div>
+        </a>
+      </div>
+    </div>
+    <div class="app-mockup">📱</div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+  <div class="newsletter-inner reveal">
+    <div class="eyebrow" style="background:rgba(255,255,255,0.2);color:#fff;margin-bottom:16px;">📧 Newsletter</div>
+    <h2>Get Exclusive Deals in Your Inbox</h2>
+    <p>Subscribe and never miss a flash sale, new arrival, or seasonal discount.</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="Enter your email address...">
+      <button onclick="showToast('🎉 Subscribed successfully!')"><i class="fas fa-paper-plane"></i> Subscribe</button>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section-bg" id="contact">
+  <div class="section-header reveal">
+    <span class="eyebrow">Get in Touch</span>
+    <h2>We're Here to Help</h2>
+    <p>Reach out via any channel — we respond fast</p>
+  </div>
+  <div class="contact-grid reveal">
+    <div class="contact-info">
+      <h3>Contact Information</h3>
+      <div class="contact-item">
+        <div class="contact-icon-wrap"><i class="fas fa-map-marker-alt"></i></div>
+        <div><h4>Store Address</h4><p>Main Bazar, Near Jamia Mosque, Allahabad, Punjab, Pakistan</p></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon-wrap"><i class="fas fa-phone-alt"></i></div>
+        <div><h4>Phone</h4><p>0311-1234567</p></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon-wrap"><i class="fab fa-whatsapp"></i></div>
+        <div><h4>WhatsApp Orders</h4><p>0321-9876543</p></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon-wrap"><i class="fas fa-envelope"></i></div>
+        <div><h4>Email</h4><p>info@awamistore.pk</p></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon-wrap"><i class="fas fa-clock"></i></div>
+        <div>
+          <h4>Business Hours</h4>
+          <div class="hours-grid">
+            <span class="hours-item"><strong>Mon–Fri</strong></span>
+            <span class="hours-item">8:00 AM – 10:00 PM</span>
+            <span class="hours-item"><strong>Saturday</strong></span>
+            <span class="hours-item">8:00 AM – 11:00 PM</span>
+            <span class="hours-item"><strong>Sunday</strong></span>
+            <span class="hours-item">10:00 AM – 9:00 PM</span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-map">
+        <div class="map-placeholder">
+          <div style="font-size:3rem;">📍</div>
+          <p>Awami General Store<br>Main Bazar, Allahabad, Punjab</p>
+        </div>
+      </div>
+      <div class="social-links">
+        <a class="social-link fb" href="#"><i class="fab fa-facebook-f"></i></a>
+        <a class="social-link ig" href="#"><i class="fab fa-instagram"></i></a>
+        <a class="social-link wa" href="#"><i class="fab fa-whatsapp"></i></a>
+        <a class="social-link yt" href="#"><i class="fab fa-youtube"></i></a>
+        <a class="social-link tw" href="#"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+    <div>
+      <div class="contact-form">
+        <h3 style="font-size:1.3rem;font-weight:800;margin-bottom:22px;color:var(--dark);">Send Us a Message</h3>
+        <input type="text" placeholder="Your Full Name">
+        <input type="email" placeholder="Email Address">
+        <input type="tel" placeholder="Phone Number">
+        <select><option>Select Subject</option><option>Product Inquiry</option><option>Order Status</option><option>Complaint</option><option>Wholesale</option><option>Delivery</option></select>
+        <textarea placeholder="Write your message here..."></textarea>
+        <button onclick="showToast('✅ Message sent! We\'ll reply soon.')"><i class="fas fa-paper-plane"></i> Send Message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="background:var(--bg);padding:80px 5%;">
+  <div class="section-header reveal">
+    <span class="eyebrow">FAQs</span>
+    <h2>Frequently Asked Questions</h2>
+    <p>Quick answers to our most common questions</p>
+  </div>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        Do you offer home delivery? <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">Yes! We offer same-day home delivery within the city. Orders above Rs. 500 qualify for free delivery. For outskirts, a small delivery charge applies.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        How can I place an order via WhatsApp? <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">Simply send us a message on 0321-9876543 with your product list, address, and preferred delivery time. We'll confirm your order within minutes.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        What is your return policy? <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">We offer a 7-day hassle-free return on all eligible products. Items must be unused and in original packaging. Perishables are non-returnable.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        Are your products 100% original? <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">Absolutely. We source directly from authorized distributors and brand-certified suppliers. All products come with original manufacturer seals.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        Do you offer bulk or wholesale pricing? <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">Yes, we have special wholesale pricing for businesses, schools, and large households. Contact us at 0311-1234567 or visit the store for bulk pricing.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        What payment methods do you accept? <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">We accept cash on delivery (COD), JazzCash, Easypaisa, bank transfer, and debit/credit cards. Online orders use secure payment gateways.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="nav-logo" style="margin-bottom:0">
+        <div class="logo-icon" style="background:linear-gradient(135deg,#4EA5FF,#0057D9)">A</div>
+        <span style="color:#fff">Awami<small style="color:rgba(255,255,255,0.5)">General Store</small></span>
+      </div>
+      <p>Your trusted household store for 15 years. Quality products, affordable prices, and fast delivery — all under one roof.</p>
+      <div class="social-links">
+        <a class="social-link fb" href="#"><i class="fab fa-facebook-f"></i></a>
+        <a class="social-link ig" href="#"><i class="fab fa-instagram"></i></a>
+        <a class="social-link wa" href="#"><i class="fab fa-whatsapp"></i></a>
+        <a class="social-link yt" href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-h">Quick Links</div>
+      <ul class="footer-links">
+        <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+        <li><a href="#products"><i class="fas fa-chevron-right"></i> Products</a></li>
+        <li><a href="#categories"><i class="fas fa-chevron-right"></i> Categories</a></li>
+        <li><a href="#offers"><i class="fas fa-chevron-right"></i> Offers</a></li>
+        <li><a href="#about"><i class="fas fa-chevron-right"></i> About Us</a></li>
+        <li><a href="#gallery"><i class="fas fa-chevron-right"></i> Gallery</a></li>
+        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-h">Categories</div>
+      <ul class="footer-links">
+        <li><a href="#"><i class="fas fa-chevron-right"></i> Groceries</a></li>
+        <li><a href="#"><i class="fas fa-chevron-right"></i> Personal Care</a></li>
+        <li><a href="#"><i class="fas fa-chevron-right"></i> Baby Products</a></li>
+        <li><a href="#"><i class="fas fa-chevron-right"></i> Cosmetics</a></li>
+        <li><a href="#"><i class="fas fa-chevron-right"></i> Beverages</a></li>
+        <li><a href="#"><i class="fas fa-chevron-right"></i> Cleaning</a></li>
+        <li><a href="#"><i class="fas fa-chevron-right"></i> Dry Fruits</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-h">Customer Service</div>
+      <ul class="footer-links">
+        <li><a href="#"><i class="fas fa-chevron-right"></i> Track Order</a></li>
+        <li><a href="#"><i class="fas fa-chevron-right"></i> Returns Policy</a></li>
+        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQs</a></li>
+        <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+        <li><a href="#"><i class="fas fa-chevron-right"></i> Terms & Conditions</a></li>
+        <li><a href="#"><i class="fas fa-chevron-right"></i> Wholesale</a></li>
+        <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-h">Contact Us</div>
+      <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i><span>Main Bazar, Near Jamia Mosque,<br>Allahabad, Punjab, Pakistan</span></div>
+      <div class="footer-contact-item"><i class="fas fa-phone-alt"></i><span>0311-1234567</span></div>
+      <div class="footer-contact-item"><i class="fab fa-whatsapp"></i><span>0321-9876543</span></div>
+      <div class="footer-contact-item"><i class="fas fa-envelope"></i><span>info@awamistore.pk</span></div>
+      <div class="footer-contact-item"><i class="fas fa-clock"></i><span>Open 7 days a week<br>8:00 AM – 11:00 PM</span></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 <a href="#">Awami General Store</a>. All rights reserved. | <a href="#">Privacy</a> | <a href="#">Terms</a></div>
+    <div class="payment-icons">
+      <span>💳 Visa</span>
+      <span>💳 MasterCard</span>
+      <span>📱 JazzCash</span>
+      <span>📱 Easypaisa</span>
+      <span>🏦 Bank Transfer</span>
+      <span>💵 COD</span>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a class="whatsapp-float" href="https://wa.me/923219876543" target="_blank" title="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<script>
+// ── DATA ──
+const products = [
+  { name: 'Ariel Detergent Powder', cat: 'Cleaning', price: 420, old: 520, discount: 19, emoji: '🧺', rating: 4.8, reviews: 234, stock: true, badge: 'discount' },
+  { name: 'Nestle Nescafé Classic', cat: 'Beverages', price: 650, old: 750, discount: 13, emoji: '☕', rating: 4.9, reviews: 189, stock: true, badge: 'discount' },
+  { name: 'Sunsilk Hair Fall Shampoo', cat: 'Personal Care', price: 320, old: 380, discount: 16, emoji: '🧴', rating: 4.7, reviews: 312, stock: true, badge: 'discount' },
+  { name: 'Dalda Cooking Oil 5L', cat: 'Groceries', price: 1850, old: 2100, discount: 12, emoji: '🛢️', rating: 4.6, reviews: 98, stock: true, badge: 'discount' },
+  { name: 'Johnson\'s Baby Lotion', cat: 'Baby Care', price: 285, old: null, discount: 0, emoji: '👶', rating: 4.9, reviews: 445, stock: true, badge: 'new' },
+  { name: 'Sooper Biscuits Pack of 12', cat: 'Snacks', price: 220, old: 260, discount: 15, emoji: '🍪', rating: 4.5, reviews: 176, stock: true, badge: 'discount' },
+  { name: 'Basmati Rice 5kg', cat: 'Groceries', price: 980, old: 1100, discount: 11, emoji: '🍚', rating: 4.7, reviews: 267, stock: true, badge: 'discount' },
+  { name: 'Colgate Max Fresh 150g', cat: 'Personal Care', price: 155, old: null, discount: 0, emoji: '🪥', rating: 4.8, reviews: 521, stock: true, badge: 'new' },
+];
+
+const testimonials = [
+  { name: 'Fatima Malik', role: 'Housewife, Allahabad', text: 'Awami General Store is my go-to for everything! Fast delivery, fresh products, and amazing prices. I order every week and I\'m never disappointed.', rating: 5, initial: 'F' },
+  { name: 'Ahmed Raza', role: 'Shop Owner, Punjab', text: 'I buy in bulk for my small shop. Their wholesale prices are unbeatable and the products are always genuine. Highly recommended for businesses!', rating: 5, initial: 'A' },
+  { name: 'Sara Khan', role: 'Working Mother', text: 'The WhatsApp ordering is so convenient. I send my list and it arrives the same evening. The baby products are always fresh and authentic.', rating: 5, initial: 'S' },
+  { name: 'Muhammad Bilal', role: 'Teacher', text: 'Great selection of products and the staff is very helpful. I\'ve been shopping here for 5 years and the quality has never dropped.', rating: 5, initial: 'M' },
+  { name: 'Ayesha Siddiqui', role: 'Student Hostel', text: 'Perfect for bulk grocery shopping. Got our whole hostel stocked up at a fraction of the usual cost. The cooking oil and flour deals are incredible.', rating: 4, initial: 'A' },
+  { name: 'Usman Tariq', role: 'Restaurant Owner', text: 'Reliable supply of spices, oils, and kitchen essentials. Their B2B pricing saved us a lot. Quick delivery even on bulk orders.', rating: 5, initial: 'U' },
+];
+
+const brands = ['🧪 Ariel', '🧴 Sunsilk', '🛢️ Dalda', '🥛 Nestle', '🍪 Peek Freans', '💄 Ponds', '🧹 Surf Excel', '🪥 Colgate', '☕ Tapal', '🧼 Lifebuoy', '🛁 Lux', '🌿 Safeguard', '📦 National', '🍵 Lipton', '🥛 Olpers', '🍬 Rafhan'];
+
+const cartItems = [];
+
+// ── RENDER PRODUCTS ──
+function renderProducts() {
+  const grid = document.getElementById('productsGrid');
+  grid.innerHTML = products.map((p, i) => `
+    <div class="product-card reveal">
+      <div class="product-img">
+        ${p.badge === 'discount' ? `<span class="badge-discount">-${p.discount}%</span>` : `<span class="badge-new">NEW</span>`}
+        <div class="product-img-inner">${p.emoji}</div>
+        <div class="product-actions">
+          <button class="action-btn" title="Wishlist" onclick="showToast('❤️ Added to wishlist!')"><i class="fas fa-heart"></i></button>
+          <button class="action-btn" title="Quick View" onclick="showToast('👁️ Quick view coming soon!')"><i class="fas fa-eye"></i></button>
+          <button class="action-btn" title="Compare" onclick="showToast('⚖️ Added to compare!')"><i class="fas fa-balance-scale"></i></button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">${p.cat}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-rating">
+          <span class="stars">${'★'.repeat(Math.floor(p.rating))}${'☆'.repeat(5 - Math.floor(p.rating))}</span>
+          <span class="rating-count">${p.rating} (${p.reviews})</span>
+        </div>
+        <div class="product-price">
+          <span class="price-current">Rs. ${p.price.toLocaleString()}</span>
+          ${p.old ? `<span class="price-old">Rs. ${p.old.toLocaleString()}</span>` : ''}
+        </div>
+        <div class="stock-status in-stock"><i class="fas fa-circle" style="font-size:0.5rem"></i> In Stock</div>
+        <button class="btn-add-cart" onclick="addToCart('${p.name}', ${p.price}, '${p.emoji}')">
+          <i class="fas fa-shopping-cart"></i> Add to Cart
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── RENDER TESTIMONIALS ──
+function renderTestimonials() {
+  const data = [...testimonials, ...testimonials];
+  document.getElementById('testiTrack').innerHTML = data.map(t => `
+    <div class="testimonial-card">
+      <div class="testi-stars">${'★'.repeat(t.rating)}${t.rating < 5 ? '☆' : ''}</div>
+      <p class="testi-text">"${t.text}"</p>
+      <div class="testi-author">
+        <div class="testi-avatar">${t.initial}</div>
+        <div>
+          <div class="testi-name">${t.name}</div>
+          <div class="testi-role">${t.role}</div>
+          <div class="verified"><i class="fas fa-check-circle"></i> Verified Purchase</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── RENDER BRANDS ──
+function renderBrands() {
+  const data = [...brands, ...brands];
+  document.getElementById('brandsTrack').innerHTML = data.map(b => `
+    <div class="brand-chip">${b}</div>
+  `).join('');
+}
+
+// ── CART ──
+let cartTotal = 0;
+let cartCount = 0;
+
+function addToCart(name, price, emoji) {
+  cartCount++;
+  cartTotal += price;
+  document.getElementById('nav-cart-count').textContent = cartCount;
+  document.getElementById('cart-count-drawer').textContent = cartCount;
+  document.getElementById('cart-total-price').textContent = 'Rs. ' + cartTotal.toLocaleString();
+
+  const list = document.getElementById('cart-items-list');
+  if (cartCount === 1) list.innerHTML = '';
+  list.innerHTML += `
+    <div class="cart-item">
+      <div class="cart-item-img">${emoji}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${name}</div>
+        <div class="cart-item-price">Rs. ${price.toLocaleString()}</div>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart(this, ${price})"><i class="fas fa-times"></i></button>
+    </div>
+  `;
+  showToast('🛒 ' + name + ' added to cart!');
+}
+
+function removeFromCart(btn, price) {
+  btn.closest('.cart-item').remove();
+  cartCount--;
+  cartTotal -= price;
+  document.getElementById('nav-cart-count').textContent = cartCount;
+  document.getElementById('cart-count-drawer').textContent = cartCount;
+  document.getElementById('cart-total-price').textContent = 'Rs. ' + cartTotal.toLocaleString();
+  if (cartCount === 0) {
+    document.getElementById('cart-items-list').innerHTML = `
+      <div style="text-align:center;padding:40px 20px;color:var(--muted);">
+        <div style="font-size:3rem;margin-bottom:14px;">🛒</div>
+        <p style="font-size:0.88rem;">Your cart is empty</p>
+      </div>
+    `;
+  }
+}
+
+function toggleCart() {
+  document.getElementById('cartDrawer').classList.toggle('open');
+  document.getElementById('cartOverlay').classList.toggle('open');
+}
+
+// ── TOAST ──
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ── NAVBAR ──
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 60) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+
+  // Progress bar
+  const total = document.body.scrollHeight - window.innerHeight;
+  document.getElementById('progress-bar').style.width = (window.scrollY / total * 100) + '%';
+
+  // Scroll to top btn
+  const btn = document.getElementById('scroll-top');
+  if (window.scrollY > 400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// ── MOBILE MENU ──
+function toggleMobileMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// ── DARK MODE ──
+function toggleDark() {
+  document.body.classList.toggle('dark-mode');
+  const btn = document.querySelector('.dark-toggle');
+  btn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+}
+
+// ── FAQ ──
+function toggleFaq(el) {
+  const item = el.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+// ── COUNTDOWN ──
+function startCountdown() {
+  let total = 5 * 3600 + 47 * 60 + 30;
+  setInterval(() => {
+    if (total <= 0) return;
+    total--;
+    const h = Math.floor(total / 3600);
+    const m = Math.floor((total % 3600) / 60);
+    const s = total % 60;
+    document.getElementById('cd-h').textContent = String(h).padStart(2, '0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2, '0');
+    document.getElementById('cd-s').textContent = String(s).padStart(2, '0');
+  }, 1000);
+}
+
+// ── REVEAL ON SCROLL ──
+function revealElements() {
+  document.querySelectorAll('.reveal').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 60) el.classList.add('visible');
+  });
+}
+window.addEventListener('scroll', revealElements);
+
+// ── COUNTERS ──
+function startCounters() {
+  document.querySelectorAll('.counter').forEach(el => {
+    const target = parseInt(el.dataset.target);
+    const dur = 1800;
+    const step = target / (dur / 16);
+    let cur = 0;
+    const interval = setInterval(() => {
+      cur += step;
+      if (cur >= target) { cur = target; clearInterval(interval); }
+      el.textContent = Math.floor(cur).toLocaleString() + '+';
+    }, 16);
+  });
+}
+
+// Trigger counters when stats section visible
+const statObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { startCounters(); statObserver.disconnect(); } });
+}, { threshold: 0.3 });
+document.querySelector('.stats-section') && statObserver.observe(document.querySelector('.stats-section'));
+
+// ── PARTICLES ──
+function createParticles() {
+  const container = document.getElementById('heroParticles');
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 60 + 20;
+    p.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random() * 100}%;
+      bottom:${Math.random() * -20}%;
+      animation-delay:${Math.random() * 8}s;
+      animation-duration:${Math.random() * 5 + 6}s;
+    `;
+    container.appendChild(p);
+  }
+}
+
+// ── INIT ──
+renderProducts();
+renderTestimonials();
+renderBrands();
+startCountdown();
+createParticles();
+revealElements();
+setTimeout(revealElements, 300);
+</script>
+</body>
+</html>
